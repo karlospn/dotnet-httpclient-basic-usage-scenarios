@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientUsageScenarios.Net7.WebApi", "src\HttpClientUsageScenarios.WebApi\HttpClientUsageScenarios.Net7.WebApi.csproj", "{10317BAA-4A0C-4819-98BB-8ED86B711A40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientUsageScenarios.Net7.WebApi", "src\HttpClientUsageScenarios.Net7.WebApi\HttpClientUsageScenarios.Net7.WebApi.csproj", "{10317BAA-4A0C-4819-98BB-8ED86B711A40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientUsageScenarios.NetFramework.WebApi", "src\HttpClientUsageScenarios.NetFramework.WebApi\HttpClientUsageScenarios.NetFramework.WebApi.csproj", "{7C211E4F-C3F4-427E-9F02-C0573B0BD055}"
 EndProject
