@@ -35,7 +35,8 @@ namespace HttpClientUsageScenarios.NetFramework.WebApi
                     c.Timeout = TimeSpan.FromSeconds(15);
                     c.DefaultRequestHeaders.Add(
                         "accept", "application/json");
-                });
+                })
+                    .SetHandlerLifetime(TimeSpan.FromSeconds(15));
 
                 var provider = services.BuildServiceProvider();
                 return provider.GetRequiredService<IHttpClientFactory>();
