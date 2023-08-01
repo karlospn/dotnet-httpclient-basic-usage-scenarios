@@ -1,8 +1,6 @@
-# Basic HttpClient usage scenarios
-
 This repository contains a series of basic C# scenarios demonstrating how to use the HttpClient functionality correctly and incorrectly.
 
-# **Scenario 1: Create a new HttpClient for every request**
+# **Scenario 1: Create a new HttpClient for every incoming request**
 
 ## Source code
 
@@ -47,7 +45,7 @@ public class ScenarioOneController : ControllerBase
 
 
 
-# **Scenario 2: Create a new HttpClient for every request and dispose of it immediately after finishing using it**
+# **Scenario 2: Create a new HttpClient for every incoming request and dispose of it after use**
 
 - A new ``HttpClient`` is instantiated everytime a new request comes in.
 - The ``HttpClient`` is disposed right after being used.
@@ -80,7 +78,7 @@ public class ScenarioTwoController : ControllerBase
 ```
 
 ## Pros & cons of this scenario
-### Pros: 
+### Pros
 - In this scenario, it is less likely for the application to suffer from port exhaustion issues. In scenario 1, for each request, the TCP connection would remain in the ``ESTABLISHED`` state for a few minutes until the operating system forced it to close.    
 In scenario 2, as we are disposing of the HTTP client right after using it, the connection is closed directly, bypassing the time the connection was hanging around in the ``ESTABLISHED`` state doing nothing.
 
@@ -90,7 +88,7 @@ In scenario 2, as we are disposing of the HTTP client right after using it, the 
 
 
 
-# **Scenario 3: Create a static or singleton HttpClient instance and re-use it**
+# **Scenario 3: Create a static HttpClient and use it for any incoming requests**
 
 ## Source code
 - A ``static`` HttpClient instance is created once and utilized for all received requests.
@@ -123,7 +121,7 @@ public class ScenarioThreeController : ControllerBase
 ```
 
 ## Pros & cons of this scenario
-### Pros: 
+### Pros
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue.    
 If the rate of requests is very high, the operating system limit of available ports might still be exhausted, but the best way to minimize this issue is exactly what we're doing in this scenario, reusing ``HttpClient`` instances for as many HTTP requests as possible.
 
@@ -133,7 +131,7 @@ If the rate of requests is very high, the operating system limit of available po
 
 - HttpClient only resolves DNS entries when a TCP connection is created. If DNS entries changes after a TCP connection has been established, then the client won't notice those updates.    
 
-# **Scenario 4: Create a static or singleton HttpClient instance with PooledConnectionLifetime and re-use it**
+# **Scenario 4: Create a static or singleton HttpClient with PooledConnectionLifetime and use it for any incoming requests**
 
 ## Source code
 - A ``static`` HttpClient instance is created once and utilized for all received requests.
@@ -172,7 +170,7 @@ public class ScenarioFourController : ControllerBase
 ```
 
 ## Pros & cons of this scenario
-### Pros: 
+### Pros
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue. 
 - It solves the DNS change issue mentioned on scenario 3.
 
@@ -233,7 +231,7 @@ public class ScenarioFiveController : ControllerBase
 ```
 
 ## Pros & cons
-### Pros: 
+### Pros
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue. 
 - It solves the DNS change issue mentioned on scenario 3.
 - It simplifies the declaration and usage of ``HttpClient`` instances.
@@ -257,7 +255,7 @@ builder.Services.AddHttpClient("typicode", c =>
     .SetHandlerLifetime(TimeSpan.FromMinutes(20));
 ```
 
-# **Scenario 6: Using IHttpClientFactory with .NET Framework and Autofac** 
+# **Scenario 6: Use IHttpClientFactory with .NET Framework (and Autofac)** 
 
 > **This is a .NET Framework only scenario**
 
@@ -363,7 +361,7 @@ public class AutofacWebapiConfig
 ```
 
 ## Pros & cons
-### Pros: 
+### Pros 
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue. 
 - It solves the DNS change issues mentioned on scenario 3.
 
