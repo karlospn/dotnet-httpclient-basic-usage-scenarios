@@ -172,7 +172,9 @@ public class ScenarioFourController : ControllerBase
 ## Pros & cons of this scenario
 ### Pros
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue. 
-- It solves the DNS change issue mentioned on scenario 3.
+- It solves the DNS change issue mentioned on scenario 3.   
+DNS resolution occurs when a TCP connection is created, which means that if the DNS changes the TCP connection is unaware of it.   
+The solution to avoid this issue is to create **short-lived** TCP connections that can be reused. Thus, when the time specified by the ``PooledConnectionLifetime`` property is reached, the TCP connection is closed, and a new TCP connection is created, forcing DNS resolution to occur again.
 
 ### Cons
 - There are no disadvantages in this scenario.   
