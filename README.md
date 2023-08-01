@@ -237,7 +237,7 @@ public class ScenarioFiveController : ControllerBase
 - It simplifies the declaration and usage of ``HttpClient`` instances.
 
 ### Cons
-- The IHttpClientFactory keeps everything nice and simple as long as you only want to modify the basic ``HttpClient`` parameter, it might be a bit harder if you need to tweak some of the less used parameters.   
+- The ``IHttpClientFactory`` keeps everything nice and simple as long as you only want to modify the basic ``HttpClient`` parameter, it might be a bit harder if you need to tweak some of the less used parameters.   
 The next code snippet is an example of how to set the ``PooledConnectionIdleTimeout`` attribute, as you can see you'll need to use the ``ConfigurePrimaryHttpMessageHandler`` extension method and create a new ``SocketsHttpHandler`` instance, just to set the value of the ``PooledConnectionIdleTimeout`` attribute.
 
 ```csharp
@@ -261,7 +261,7 @@ builder.Services.AddHttpClient("typicode", c =>
 
 ## Source code
 
-- This scenarios uses Autofac as IoC container.
+- This scenario uses Autofac as IoC container.
 - An ``IHttpClientFactory`` named client is setup in the ``AutofacWebapiConfig.cs``.
 - A few steps are required to setup ``IHttpClientFactory`` with Autofac:
     - Add required packages:
