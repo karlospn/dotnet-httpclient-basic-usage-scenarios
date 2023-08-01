@@ -82,7 +82,7 @@ public class ScenarioTwoController : ControllerBase
 ## Pros & cons of this scenario
 ### Pros
 - In this scenario, it is less likely for the application to suffer from port exhaustion issues. In scenario 1, for each request, the TCP connection would remain in the ``ESTABLISHED`` state for a few minutes until the operating system forced it to close.    
-In scenario 2, as we are disposing of the HTTP client right after using it, the connection is closed directly, bypassing the time the connection was hanging around in the ``ESTABLISHED`` state doing nothing.
+In scenario 2, as we are disposing of the HTTP client right after using it, the connection is closed directly, bypassing the time the connection was hanging around in a ``ESTABLISHED`` state doing nothing.
 
 ### Cons
 - A new ``HttpClient`` is being created everytime a new request comes in, which means that the application has a unnecessary overhead from establishing a new TCP connection every single time.
@@ -139,8 +139,6 @@ If the rate of requests is very high, the operating system limit of available po
 - A ``static`` HttpClient instance is created once and utilized for all received requests.
 - The HttpClient is created using the ``PooledConnectionLifetime`` attribute. This attribute defines how long connections remain active when pooled. Once this lifetime expires, the connection will no longer be pooled or issued for future requests.  
 
-> In the next code snippet, the ``PooledConnectionLifetime`` is set to 15 seconds, which means that TCP connections will cease to be re-issued and be closed after a maximum of 15 seconds. This is highly inefficient and it is only done for demo purposes.
-
 ```csharp
 [ApiController]
 [Route("[controller]")]
@@ -148,7 +146,7 @@ public class ScenarioFourController : ControllerBase
 {
     private static readonly HttpClient Client = new(new SocketsHttpHandler
     {
-        PooledConnectionLifetime = TimeSpan.FromSeconds(10)
+        PooledConnectionLifetime = TimeSpan.FromMinutes(20)
     })
     {
         BaseAddress = new Uri("https://jsonplaceholder.typicode.com/"),
@@ -186,7 +184,6 @@ It is true that we have to know more and more details to work correctly with ``H
 
 - An ``IHttpClientFactory`` Named client is setup in the ``Program.cs`` (this scenario uses an IHttpClientFactory named clients, you could use typed client or basic clients and the result will be exactly the same).
 - The ``SetHandlerLifetime`` extension method defines the length of time that a ``HttpMessageHandler`` instance can be reused before being discarded. It works almost identical as the ``PooledConnectionLifetime`` attribute from the previous scenario.
-- The ``SetHandlerLifetime`` method is set to 15 seconds, which means that TCP connections will cease to be re-issued and be closed after a maximum of 15 seconds. This is highly inefficient and it is only done for demo purposes.
 - We use the ``CreateClient`` method from the ``IHttpClientFactory`` to obtain a ``httpClient`` to call our API.
 
 
@@ -199,7 +196,7 @@ builder.Services.AddHttpClient("typicode", c =>
                 c.DefaultRequestHeaders.Add(
                     "accept", "application/json");
             })
-            .SetHandlerLifetime(TimeSpan.FromSeconds(15));
+            .SetHandlerLifetime(TimeSpan.FromMinutes(20));
 ````
 
 On ``ScenarioFiveController.cs``:
@@ -319,7 +316,7 @@ public class AutofacWebapiConfig
                 c.DefaultRequestHeaders.Add(
                     "accept", "application/json");
             })
-            .SetHandlerLifetime(TimeSpan.FromSeconds(15));
+            .SetHandlerLifetime(TimeSpan.FromMinutes(20));
 
             var provider = services.BuildServiceProvider();
             return provider.GetRequiredService<IHttpClientFactory>();
