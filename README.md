@@ -178,13 +178,12 @@ The solution to avoid this issue is to create **short-lived** TCP connections th
 
 ### Cons
 - There are no disadvantages in this scenario.   
-It is true that we have to know more and more details to work correctly with ``HttpClient``, but scenario 5 precisely simplifies this entire process.
 
 # **Scenario 5: Use IHttpClientFactory**
 
 ## Source code
 
-- An ``IHttpClientFactory`` Named client is setup in the ``Program.cs`` (this scenario uses an IHttpClientFactory named clients, you could use typed client or basic clients and the result will be exactly the same).
+- An ``IHttpClientFactory`` named client is setup in the ``Program.cs`` (this scenario uses an ``IHttpClientFactory`` named clients, you could use typed client or basic clients and the result will be exactly the same).
 - The ``SetHandlerLifetime`` extension method defines the length of time that a ``HttpMessageHandler`` instance can be reused before being discarded. It works almost identical as the ``PooledConnectionLifetime`` attribute from the previous scenario.
 - We use the ``CreateClient`` method from the ``IHttpClientFactory`` to obtain a ``httpClient`` to call our API.
 
@@ -238,7 +237,7 @@ public class ScenarioFiveController : ControllerBase
 - It simplifies the declaration and usage of ``HttpClient`` instances.
 
 ### Cons
-- The IHttpClientFactory keeps everything nice and simple, but it is harder if you need to tweak some additional parameters.   
+- The IHttpClientFactory keeps everything nice and simple as long as you only want to modify the basic ``HttpClient`` parameter, it might be a bit harder if you need to tweak some of the less used parameters.   
 The next code snippet is an example of how to set the ``PooledConnectionIdleTimeout`` attribute, as you can see you'll need to use the ``ConfigurePrimaryHttpMessageHandler`` extension method and create a new ``SocketsHttpHandler`` instance, just to set the value of the ``PooledConnectionIdleTimeout`` attribute.
 
 ```csharp
