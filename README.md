@@ -1,3 +1,5 @@
+# Introduction
+
 This repository contains a series of basic C# scenarios demonstrating how to use the HttpClient functionality correctly and incorrectly.
 
 # **Scenario 1: Create a new HttpClient for every incoming request**
