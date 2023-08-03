@@ -35,7 +35,7 @@ public class ScenarioOneController : ControllerBase
     }
 }
 ```
-## Pros & cons from this scenario
+## Pros & cons of this scenario
 
 ### Pros
 - None
@@ -76,7 +76,7 @@ public class ScenarioTwoController : ControllerBase
 }
 ```
 
-## Pros & cons from this scenario
+## Pros & cons of this scenario
 ### Pros
 - In this scenario, it is less likely for the application to experience port exhaustion issues.   
 In scenario 1, for each request, the TCP connection would remain in an ``ESTABLISHED`` state for a few minutes until the operating system forced it to close.    
@@ -119,7 +119,7 @@ public class ScenarioThreeController : ControllerBase
 }
 ```
 
-## Pros & cons from this scenario
+## Pros & cons of this scenario
 ### Pros 
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue.    
 If the rate of requests is very high, the operating system limit of available ports might still be exhausted, but the best way to minimize this issue is exactly what we're doing in this scenario, reusing ``HttpClient`` instances for as many HTTP requests as possible.
@@ -166,7 +166,7 @@ public class ScenarioFourController : ControllerBase
 }
 ```
 
-## Pros & cons from this scenario
+## Pros & cons of this scenario
 ### Pros 
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue. 
 - It solves the DNS change issue mentioned on scenario 3.   
@@ -226,7 +226,7 @@ public class ScenarioFiveController : ControllerBase
 }
 ```
 
-## Pros & cons from this scenario
+## Pros & cons of this scenario
 ### Pros 
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue. 
 - It solves the DNS change issue mentioned on scenario 3.
@@ -356,7 +356,7 @@ public class AutofacWebapiConfig
 }
 ```
 
-## Pros & cons from this scenario
+## Pros & cons of this scenario
 ### Pros 
 - TCP connections are being reused, which further reduces the likelihood of experiencing a port exhaustion issue. 
 - It solves the DNS change issues mentioned on scenario 3.
